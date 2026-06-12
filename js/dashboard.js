@@ -145,16 +145,29 @@ class UltraDashboard {
     // =========================================
     // WALLET ENGINE (ADVANCED)
     // =========================================
-    renderWalletEngine() {
+    function updateWallet(amount){
 
-        const points = this.user.points || 0;
+    const el = document.getElementById("walletValue");
 
-        this.animateCounter(this.elements.points, points);
-        this.animateCounter(this.elements.totalPoints, points);
+    let current = parseInt(el.innerText.replace("৳","")) || 0;
+    let target = current + amount;
 
-        // Reward engine simulation
-        this.rewardEngine(points);
-    }
+    let step = 1;
+
+    const interval = setInterval(() => {
+
+        current += step;
+        el.innerText = "৳" + current;
+
+        el.parentElement.classList.add("glow");
+
+        if(current >= target){
+            clearInterval(interval);
+            el.parentElement.classList.remove("glow");
+        }
+
+    }, 20);
+}
 
     // =========================================
     // VIP ENGINE
