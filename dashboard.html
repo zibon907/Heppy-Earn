@@ -1,48 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 <meta charset="UTF-8">
-<title>Dashboard</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | Virtual Rewards</title>
+
+<link rel="stylesheet" href="css/profile.css">
 </head>
 
 <body>
 
-<div class="dashboard">
+<!-- ===================================== -->
+<!-- APP LAYOUT -->
+<!-- ===================================== -->
 
-<h1>Dashboard</h1>
+<div class="app-layout">
 
-<div class="box">
+    <!-- ===================================== -->
+    <!-- SIDEBAR -->
+    <!-- ===================================== -->
 
-<h2 id="userName"></h2>
+    <aside class="sidebar">
 
-<p>Email:
-<span id="userEmail"></span>
-</p>
+        <div class="sidebar-header">
+            <h2 class="brand-logo">Virtual Rewards</h2>
+        </div>
 
-</div>
+        <nav class="sidebar-nav">
 
-<div class="box">
+            <a href="dashboard.html" class="nav-link active">Dashboard</a>
+            <a href="profile.html" class="nav-link">Profile</a>
+            <a href="settings.html" class="nav-link">Settings</a>
+            <a href="notifications.html" class="nav-link">Notifications</a>
 
-<h3>Virtual Wallet</h3>
+        </nav>
 
-<h2 id="userPoints"></h2>
+    </aside>
 
-</div>
+    <!-- ===================================== -->
+    <!-- MAIN CONTENT -->
+    <!-- ===================================== -->
 
-<div class="box">
+    <main class="main-content">
 
-<h3 id="userVip"></h3>
+        <!-- ===================================== -->
+        <!-- TOPBAR -->
+        <!-- ===================================== -->
 
-</div>
+        <header class="topbar">
 
-<button onclick="logout()">
-Logout
-</button>
+            <div class="topbar-left">
+                <h1>Dashboard Overview</h1>
+            </div>
 
-</div>
+            <div class="topbar-right">
 
-<script src="dashboard.js"></script>
+                <button id="notificationBtn" class="icon-button">
+                    Notifications
+                </button>
 
-</body>
-</html>
+                <button id="logoutBtn" class="logout-button">
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- ===================================== -->
+        <!-- USER WELCOME CARD -->
+        <!-- ===================================== -->
+
+        <section class="card profile-hero">
+
+            <div>
+                <h2 id="userName">Loading...</h2>
+                <p id="userEmail">email@example.com</p>
+            </div>
+
+        </section>
+
+        <!-- ===================================== -->
+        <!-- STATS GRID -->
+        <!-- ===================================== -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <h3>Wallet</h3>
+                <div id="userPoints" class="stat-value">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>VIP Level</h3>
+                <div id="userVip" class="stat-value">Bronze</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Referrals</h3>
+                <div id="referralCount" class="stat-value">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Referral Code</h3>
+                <div id="referralCode" class="stat-value">---</div>
+            </div>
