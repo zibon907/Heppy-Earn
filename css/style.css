@@ -369,11 +369,11 @@ overflow:hidden;
 
 @media(min-width:768px){
     .auth-container{ max-width:500px; }
-    .dashboard{ max-width:850px; }
+    .dashboard{ max-width:1200px; }
 }
 
 @media(min-width:1024px){
-    .dashboard{ max-width:1100px; }
+    .dashboard{ max-width:1200px; }
 }
 
 /* ========================= NAVBAR ========================= */
