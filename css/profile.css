@@ -842,6 +842,31 @@ button {
   to { text-shadow: 0 0 30px var(--color-accent), 0 0 40px var(--color-accent-2); }
 }
 
+.hero-pro{
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-pro::after{
+    content:"";
+    position:absolute;
+    width:200px;
+    height:200px;
+    background:rgba(59,130,246,.3);
+    filter:blur(80px);
+    top:-50px;
+    right:-50px;
+    animation: floatGlow 6s infinite;
+}
+
+@keyframes floatGlow{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(20px)}
+}
 .pulse {
   animation: pulseScale 2s ease-in-out infinite;
 }
