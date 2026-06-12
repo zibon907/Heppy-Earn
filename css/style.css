@@ -274,18 +274,31 @@ html{
     cursor:pointer;
 }
 
-/* =========================
-   WALLET CARD (SPECIAL)
-========================= */
-
+/* ========================= WALLET CARD PREMIUM ========================= */
 .wallet-card{
-    background:linear-gradient(135deg,#2563eb,#1e40af);
-    border-radius:20px;
-    padding:25px;
-    position:relative;
-    overflow:hidden;
-    box-shadow:0 15px 40px rgba(37,99,235,0.35);
+background:
+linear-gradient(
+    135deg,
+    #2563eb,
+    #4f46e5,
+    #7c3aed
+);
+
+border:none;
+
+min-height:220px;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+
+position:relative;
+
+overflow:hidden;
 }
+.wallet-card h2{ font-size:42px; font-weight:800; margin:10px 0; }
+.wallet-card span{ font-size:13px; text-transform:uppercase; letter-spacing:1px; opacity:.9; }
+.wallet-card p{ opacity:.9; }
 
 .wallet-card::after{
     content:"";
@@ -388,31 +401,7 @@ background:linear-gradient(
 /* ========================= DASHBOARD GRID ========================= */
 .dashboard-grid{ display:grid; gap:20px; }
 .stats-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
-/* ========================= WALLET CARD PREMIUM ========================= */
-.wallet-card{
-background:
-linear-gradient(
-    135deg,
-    #2563eb,
-    #4f46e5,
-    #7c3aed
-);
 
-border:none;
-
-min-height:220px;
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-
-position:relative;
-
-overflow:hidden;
-}
-.wallet-card h2{ font-size:42px; font-weight:800; margin:10px 0; }
-.wallet-card span{ font-size:13px; text-transform:uppercase; letter-spacing:1px; opacity:.9; }
-.wallet-card p{ opacity:.9; }
 /* ========================= STATS CARD ========================= */
 .stat-card{
 background:var(--card);
