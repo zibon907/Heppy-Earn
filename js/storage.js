@@ -65,19 +65,19 @@ const StorageService = {
     // =========================================
     // ADD NEW USER
     // =========================================
-    addUser(newUser) 
-	if(
- 	  !newUser.name ||
-	 !newUser.email)
-{
-	 return false;
-	
-       const users = this.getUsers();
+    addUser(newUser) {
 
-        const exists = users.some(
-            user => user.email === newUser.email
-        );
+    if (!newUser?.name || !newUser?.email) {
+        return {
+            success: false,
+            message: "Invalid user data"
+        };
+    }
 
+    const users = this.getUsers();
+
+    ...
+	}
         if (exists) {
             return {
                 success: false,
@@ -207,7 +207,7 @@ const StorageService = {
     // =========================================
     // CLEAR ALL DATA (DEV ONLY)
     // =========================================
-    clearAll() {
+    if(confirm("DEV ONLY")) {
 
         localStorage.removeItem(this.KEYS.USERS);
         localStorage.removeItem(this.KEYS.CURRENT_USER);
