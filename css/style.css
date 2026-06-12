@@ -47,7 +47,7 @@ html{
     --card-solid:#1e293b;
     --card-light:#334155;
 
-    --primary:#2563eb;
+    --primary:var(--primary);
     --primary-hover:#1d4ed8;
 
     --success:#22c55e;
@@ -285,7 +285,7 @@ html{
 background:
 linear-gradient(
     135deg,
-    #2563eb,
+    var(--primary),
     #4f46e5,
     #7c3aed
 );
@@ -400,7 +400,7 @@ border-radius:50%;
 
 background:linear-gradient(
     135deg,
-    #2563eb,
+    var(--primary)
     #7c3aed
 );
 }
@@ -422,7 +422,7 @@ padding:20px;
 
 transition:.3s;
 }
-.stat-card:hover{ transform:translateY(-4px); border-color:#2563eb; }
+.stat-card:hover{ transform:translateY(-4px); border-color:var(--primary); }
 .stat-card h4{ color:var(--text-secondary); font-size:13px; margin-bottom:8px; }
 .stat-card span{ font-size:28px; font-weight:700; }
 /* ========================= VIP BADGE ========================= */
@@ -500,7 +500,7 @@ display:flex;
 justify-content:center;
 align-items:center;
 
-background:#2563eb;
+background:var(--primary);
 
 color:white;
 
