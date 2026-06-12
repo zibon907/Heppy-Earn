@@ -1,7 +1,303 @@
 /* ========================================
 ROOT VARIABLES
 ======================================== */
+:root{
 
+--bg-main:#070b14;
+--bg-secondary:#0f172a;
+--bg-card:rgba(15,23,42,.75);
+
+--primary:#3b82f6;
+--secondary:#8b5cf6;
+--success:#22c55e;
+--warning:#f59e0b;
+--danger:#ef4444;
+
+--text:#ffffff;
+--text-soft:#94a3b8;
+
+--border:rgba(255,255,255,.08);
+
+--gradient-primary:
+linear-gradient(
+    135deg,
+    #3b82f6,
+    #8b5cf6
+);
+
+--gradient-card:
+linear-gradient(
+    180deg,
+    rgba(255,255,255,.04),
+    rgba(255,255,255,.01)
+);
+
+--shadow-sm:
+0 4px 12px rgba(0,0,0,.2);
+
+--shadow-md:
+0 10px 30px rgba(0,0,0,.35);
+
+--shadow-lg:
+0 20px 60px rgba(0,0,0,.5);
+
+--radius:20px;
+
+--sidebar-width:280px;
+
+}
+
+/* Glass Card System */
+
+.card,
+.stat-card,
+.profile-hero{
+
+background:var(--bg-card);
+
+backdrop-filter:blur(20px);
+
+border:1px solid var(--border);
+
+box-shadow:var(--shadow-md);
+
+}
+
+/* Premium Hover */
+
+.card:hover,
+.stat-card:hover{
+
+transform:translateY(-6px);
+
+border-color:
+rgba(59,130,246,.35);
+
+box-shadow:
+0 20px 40px
+rgba(59,130,246,.15);
+
+}
+
+/* Sidebar Glow */
+
+.sidebar{
+
+background:
+linear-gradient(
+180deg,
+#0f172a,
+#0b1220);
+
+border-right:
+1px solid var(--border);
+
+}
+
+.nav-link{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.nav-link::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:-100%;
+
+width:100%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.08),
+transparent);
+
+transition:.5s;
+
+}
+
+.nav-link:hover::before{
+
+left:100%;
+
+}
+
+.nav-link.active{
+
+background:
+var(--gradient-primary);
+
+color:white;
+
+box-shadow:
+0 10px 25px
+rgba(59,130,246,.35);
+
+}
+
+/* Avatar Ring */
+
+.profile-avatar{
+
+width:120px;
+height:120px;
+
+border-radius:50%;
+
+background:
+var(--gradient-primary);
+
+position:relative;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:42px;
+font-weight:700;
+
+}
+
+.profile-avatar::after{
+
+content:"";
+
+position:absolute;
+
+inset:-5px;
+
+border-radius:50%;
+
+border:2px solid
+rgba(59,130,246,.35);
+
+animation:
+pulseRing 2s infinite;
+
+}
+
+@keyframes pulseRing{
+
+0%{
+    transform:scale(1);
+    opacity:1;
+}
+
+100%{
+    transform:scale(1.15);
+    opacity:0;
+}
+
+}
+
+/* Stat Value */
+
+.stat-value{
+
+font-size:36px;
+
+font-weight:800;
+
+background:
+var(--gradient-primary);
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:
+transparent;
+
+}
+
+/* VIP Badge */
+
+.vip-badge{
+
+background:
+linear-gradient(
+135deg,
+#f59e0b,
+#facc15);
+
+color:#111;
+
+font-weight:700;
+
+padding:8px 16px;
+
+border-radius:999px;
+
+}
+
+/* Achievement Cards */
+
+.achievement-card{
+
+position:relative;
+
+overflow:hidden;
+
+transition:.3s;
+
+}
+
+.achievement-card:hover{
+
+transform:scale(1.03);
+
+}
+
+.achievement-card::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+linear-gradient(
+135deg,
+transparent,
+rgba(255,255,255,.05));
+
+}
+
+/* Timeline */
+
+.timeline-item{
+
+position:relative;
+
+padding-left:30px;
+
+}
+
+.timeline-item::before{
+
+content:"";
+
+width:12px;
+height:12px;
+
+border-radius:50%;
+
+background:#3b82f6;
+
+position:absolute;
+
+left:0;
+top:10px;
+
+}
 :root {
 
 --bg-primary: #0f172a;
