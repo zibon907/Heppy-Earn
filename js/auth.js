@@ -139,13 +139,25 @@ const AuthService = {
 
             id: Date.now(),
 
-            username: userData.username.trim(),
-            fullName: userData.fullName.trim(),
-            email: userData.email.trim().toLowerCase(),
-            password: userData.password,
+username: userData.username.trim(),
+fullName: userData.fullName.trim(),
+email: userData.email.trim().toLowerCase(),
+password: userData.password,
 
-            points: 1000,
-            vipLevel: 0,
+wallet: 0,
+xp: 0,
+level: 1,
+
+points: 0,
+
+vipLevel: "Bronze",
+
+dailyBonusClaimed: false,
+
+totalReferrals: 0,
+totalRewards: 0,
+
+achievementCount: 0,
 
             referralCode:
                 "VR-" +
