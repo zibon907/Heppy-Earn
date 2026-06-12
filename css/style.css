@@ -84,7 +84,7 @@ html{
 }
 
 .logo-area h1{
-    font-size:32px;
+    font-size:30px;
     font-weight:800;
     margin-bottom:8px;
 }
@@ -249,36 +249,6 @@ html{
     box-shadow:0 15px 40px rgba(0,0,0,0.5);
 }
 
-.game-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:15px;
-}
-
-.game-card{
-    background:#0f172a;
-    padding:20px;
-    border-radius:16px;
-    text-align:center;
-    border:1px solid rgba(255,255,255,.05);
-    transition:.3s;
-}
-
-.game-card:hover{
-    transform:translateY(-8px);
-    border-color:#3b82f6;
-}
-
-.game-card button{
-    margin-top:10px;
-    padding:10px 15px;
-    border:none;
-    border-radius:10px;
-    background:#3b82f6;
-    color:white;
-    cursor:pointer;
-}
-
 /* ========================= WALLET CARD PREMIUM ========================= */
 .wallet-card{
 background:
@@ -330,6 +300,35 @@ overflow:hidden;
     color:var(--text-secondary);
 }
 
+.game-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+}
+
+.game-card{
+    background:#0f172a;
+    padding:20px;
+    border-radius:16px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,.05);
+    transition:.3s;
+}
+
+.game-card:hover{
+    transform:translateY(-8px);
+    border-color:#3b82f6;
+}
+
+.game-card button{
+    margin-top:10px;
+    padding:10px 15px;
+    border:none;
+    border-radius:10px;
+    background:#3b82f6;
+    color:white;
+    cursor:pointer;
+}
 /* =========================
    PROFILE
 ========================= */
@@ -390,7 +389,7 @@ backdrop-filter:blur(20px);
 
 border-bottom:1px solid var(--border);
 }
-.nav-logo{ font-size:22px; font-weight:800; }
+.nav-logo{ font-size:18px; font-weight:800; }
 .nav-user{ display:flex; align-items:center; gap:12px; }
 .avatar{ width:42px; height:42px;
 border-radius:50%;
