@@ -1,141 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Earn rewards through tasks, referrals and daily bonuses.">
-	<meta property="og:title" content="Happy Earn">
-<meta property="og:description" content="Earn rewards and enjoy exclusive opportunities with Happy Earn.">
-<meta property="og:image" content="https://azibonbrhexa.github.io/Happy-Earn/assets/preview.jpg">
-<meta property="og:url" content="https://azibonbrhexa.github.io/Happy-Earn/">
-<meta property="og:type" content="website">
-    <title>Login | Rewards Platform BD</title>
-    <link rel="stylesheet" href="css/style.css">
-	<link rel="icon" href="css/1000430052.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
 
+<link rel="stylesheet" href="style.css">
+</head>
 
 <body>
 
-    <div class="auth-page">
+<div class="auth-box">
 
-        <div class="auth-container">
+    <h2>Login</h2>
 
-            <div class="logo-area">
+    <form id="loginForm">
 
-                <h1>
-                     Rewards Platform BD
-                </h1>
+        <input type="email" id="email" placeholder="Email" required>
 
-                <p>
-                   Free Rewards Platform Z
-                </p>
+        <input type="password" id="password" placeholder="Password" required>
 
-            </div>
+        <button type="submit">Login</button>
 
-            <div class="auth-card">
+    </form>
 
-                <div class="card-header">
+    <p>
+        No account?
+        <a href="register.html">Register</a>
+    </p>
 
-                    <h2>
-                          𝗪𝗲𝗹𝗰𝗼𝗺𝗲 𝗧𝗼 𝗥𝗲𝘄𝗮𝗿𝗱𝘀 𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 𝗕𝗗
-                    </h2>
+</div>
 
-                    <p>
-                        Login to continue
-                    </p>
-
-                </div>
-
-                <form
-                    id="loginForm"
-                    class="auth-form">
-
-                    <div class="input-group">
-
-                        <label for="email">
-						 Email Address
-						</label>
-						
-                        <input
-                            autocomplete="email"
-                            id="email"
-                            placeholder="Enter your email"
-                            required>
-
-                    </div>
-
-                    <div class="input-group">
-
-                        <label for="password">
-						 Password 
-					    </label>
-				
-                        <input
-                            autocomplete="current-password"
-                            id="password"
-                            placeholder="Enter password"
-                            required>
-
-                    </div>
-
-                    <div class="remember-box">
-
-                        <label>
-
-                            <input
-                                type="checkbox"
-                                id="rememberMe">
-
-                            Remember Me
-
-                        </label>
-
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="primary-btn">
-
-                        𝐋𝐨𝐠𝐢𝐧
-
-                    </button>
-
-                </form>
-
-                <div class="auth-footer">
-
-                    <p>
-
-                        Don't have an account?
-
-                        <a
-                            href="register.html">
-
-                            Create Account
-
-                        </a>
-
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <script src="js/config.js"></script>
-    <script src="js/storage.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/login.js"></script>
+<script src="storage.js"></script>
+<script src="auth.js"></script>
+<script src="login.js"></script>
 
 </body>
 </html>
-
