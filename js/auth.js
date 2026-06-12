@@ -1,66 +1,253 @@
 // =========================================
-// AUTH SERVICE (ENTERPRISE SAAS LAYER)
-// Handles Authentication + Validation + User Creation
+// AUTH SYSTEM v1.0 - ENTERPRISE GRADE
+// Login + Register + Security + Session Binding
 // =========================================
 
-const AuthService = {
+class AuthSystem {
+
+    constructor(core) {
+
+        this.core = core;
+
+        this.state = {
+            loginAttempts: new Map(),
+            lockedUsers: new Map()
+        };
+
+        this.config = {
+            MAX_ATTEMPTS: 5,
+            LOCK_TIME: 60 * 1000 * 5, // 5 min lock
+            PASSWORD_MIN: 6
+        };
+    }
 
     // =========================================
-    // INTERNAL: VALIDATION HELPERS
+    // INPUT SANITIZATION
     // =========================================
-    isValidEmail(email) {
+    sanitize(value) {
 
-        const emailRegex =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        return emailRegex.test(email);
-    },
-
-    isValidPassword(password) {
-
-        // Minimum 6 characters (can extend later)
-        return password && password.length >= 6;
-    },
-
-    isEmpty(value) {
-
-        return (
-            value === null ||
-            value === undefined ||
-            value.toString().trim() === ""
-        );
-    },
+        return this.core.sanitize(value);
+    }
 
     // =========================================
-    // LOGIN SYSTEM
+    // VALIDATION WRAPPER
     // =========================================
-    login(email, password) {
+    validateEmail(email) {
 
-        // Input validation
-        if (this.isEmpty(email) || this.isEmpty(password)) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
 
+    validatePassword(password) {
+
+        return typeof password === "string"
+            && password.length >= this.config.PASSWORD_MIN;
+    }
+
+    validateUsername(username) {
+
+        return typeof username === "string"
+            && username.trim().length >= 3
+            && username.trim().length <= 20;
+    }
+
+    // =========================================
+    // RATE LIMIT CHECK (ANTI BRUTE FORCE)
+    // =========================================
+    checkRateLimit(email) {
+
+        const now = Date.now();
+
+        const record = this.state.loginAttempts.get(email) || {
+            count: 0,
+            time: now
+        };
+
+        if (now - record.time > 60000) {
+            record.count = 0;
+            record.time = now;
+        }
+
+        record.count++;
+
+        this.state.loginAttempts.set(email, record);
+
+        if (record.count > this.config.MAX_ATTEMPTS) {
+
+            this.state.lockedUsers.set(email, now + this.config.LOCK_TIME);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    isLocked(email) {
+
+        const lockTime = this.state.lockedUsers.get(email);
+
+        if (!lockTime) return false;
+
+        if (Date.now() > lockTime) {
+            this.state.lockedUsers.delete(email);
+            return false;
+        }
+
+        return true;
+    }
+
+    // =========================================
+    // REGISTER SYSTEM
+    // =========================================
+    register({ username, email, password }) {
+
+        // =========================
+        // RATE LIMIT CHECK
+        // =========================
+        if (!this.core.rateLimit("register")) {
             return {
                 success: false,
-                message: "Email and password are required"
+                message: "Too many requests. Try again later."
             };
         }
 
-        if (!this.isValidEmail(email)) {
+        // =========================
+        // SANITIZE INPUT
+        // =========================
+        username = this.sanitize(username);
+        email = this.sanitize(email);
+        password = this.sanitize(password);
 
+        // =========================
+        // VALIDATION
+        // =========================
+        if (!this.validateUsername(username)) {
+            return {
+                success: false,
+                message: "Invalid username (3-20 chars required)"
+            };
+        }
+
+        if (!this.validateEmail(email)) {
             return {
                 success: false,
                 message: "Invalid email format"
             };
         }
 
-        const users = StorageService.getUsers();
+        if (!this.validatePassword(password)) {
+            return {
+                success: false,
+                message: "Password too weak (min 6 chars)"
+            };
+        }
+
+        // =========================
+        // CHECK EXISTING USER
+        // =========================
+        const users = this.core.storage.get("users") || [];
+
+        const exists = users.find(u => u.email === email);
+
+        if (exists) {
+            return {
+                success: false,
+                message: "User already exists"
+            };
+        }
+
+        // =========================
+        // CREATE USER OBJECT
+        // =========================
+        const newUser = {
+
+            id: this.generateId(),
+
+            username,
+            email,
+            password, // (in real backend: hashed)
+
+            wallet: 1000,
+            xp: 0,
+            vip: 0,
+
+            referrals: 0,
+            totalEarned: 0,
+
+            createdAt: Date.now(),
+            lastLogin: null,
+
+            security: {
+                loginCount: 0,
+                riskScore: 0
+            },
+
+            activities: [
+                {
+                    type: "REGISTER",
+                    message: "Account created",
+                    time: Date.now()
+                }
+            ]
+        };
+
+        users.push(newUser);
+
+        this.core.storage.set("users", users);
+
+        return {
+            success: true,
+            message: "Registration successful",
+            user: newUser
+        };
+    }
+
+    // =========================================
+    // LOGIN SYSTEM
+    // =========================================
+    login(email, password) {
+
+        // =========================
+        // RATE LIMIT CHECK
+        // =========================
+        if (!this.core.rateLimit("login")) {
+            return {
+                success: false,
+                message: "Too many login attempts"
+            };
+        }
+
+        email = this.sanitize(email);
+        password = this.sanitize(password);
+
+        // =========================
+        // LOCK CHECK
+        // =========================
+        if (this.isLocked(email)) {
+            return {
+                success: false,
+                message: "Account temporarily locked"
+            };
+        }
+
+        // =========================
+        // VALIDATION
+        // =========================
+        if (!this.validateEmail(email) || !password) {
+            return {
+                success: false,
+                message: "Invalid credentials format"
+            };
+        }
+
+        const users = this.core.storage.get("users") || [];
 
         const user = users.find(u =>
-            u.email === email &&
-            u.password === password
+            u.email === email && u.password === password
         );
 
         if (!user) {
+
+            this.checkRateLimit(email);
 
             return {
                 success: false,
@@ -68,171 +255,77 @@ const AuthService = {
             };
         }
 
-        // Update last login (important SaaS feature)
-        user.lastLogin = new Date().toISOString();
+        // =========================
+        // UPDATE USER SECURITY
+        // =========================
+        user.lastLogin = Date.now();
+        user.security.loginCount += 1;
 
-        StorageService.updateUser(user);
-        StorageService.setCurrentUser(user);
+        // reset attempts
+        this.state.loginAttempts.delete(email);
+
+        // =========================
+        // CREATE SESSION
+        // =========================
+        const session = this.core.createSession(user);
+
+        this.core.setCurrentUser(user);
+
+        this.updateUser(user);
 
         return {
             success: true,
             message: "Login successful",
-            user: user
+            user,
+            session
         };
-    },
+    }
 
     // =========================================
-    // REGISTER SYSTEM
+    // UPDATE USER IN DB
     // =========================================
-    register(userData) {
+    updateUser(updatedUser) {
 
-        // Required field validation
-        const requiredFields = [
-            "fullName",
-            "username",
-            "email",
-            "password"
-        ];
+        let users = this.core.storage.get("users") || [];
 
-        for (let field of requiredFields) {
+        users = users.map(u =>
+            u.id === updatedUser.id ? updatedUser : u
+        );
 
-            if (this.isEmpty(userData[field])) {
-
-                return {
-                    success: false,
-                    message: `${field} is required`
-                };
-            }
-        }
-
-        // Email validation
-        if (!this.isValidEmail(userData.email)) {
-
-            return {
-                success: false,
-                message: "Invalid email format"
-            };
-        }
-
-        // Password validation
-        if (!this.isValidPassword(userData.password)) {
-
-            return {
-                success: false,
-                message: "Password must be at least 6 characters"
-            };
-        }
-
-        const existingUser =
-            StorageService.findUserByEmail(userData.email);
-
-        if (existingUser) {
-
-            return {
-                success: false,
-                message: "User already exists"
-            };
-        }
-
-        // Create structured user object
-        const newUser = {
-
-            id: Date.now(),
-
-username: userData.username.trim(),
-fullName: userData.fullName.trim(),
-email: userData.email.trim().toLowerCase(),
-password: userData.password,
-
-wallet: 0,
-xp: 0,
-level: 1,
-
-points: 0,
-
-vipLevel: "Bronze",
-
-dailyBonusClaimed: false,
-
-totalReferrals: 0,
-totalRewards: 0,
-
-achievementCount: 0,
-
-            referralCode:
-                "VR-" +
-                Math.random()
-                    .toString(36)
-                    .substring(2, 8)
-                    .toUpperCase(),
-
-            totalReferrals: 0,
-            totalRewards: 0,
-
-            activities: [
-                {
-                    type: "ACCOUNT_CREATED",
-                    description: "Account created successfully",
-                    timestamp: new Date().toISOString()
-                }
-            ],
-
-            notifications: [],
-
-            securityScore: 100,
-
-            createdAt: new Date().toISOString(),
-            lastLogin: null
-        };
-
-        const result = StorageService.addUser(newUser);
-
-        if (!result.success) {
-
-            return result;
-        }
-
-        // Auto login after register (SaaS UX feature)
-        StorageService.setCurrentUser(newUser);
-
-        return {
-            success: true,
-            message: "Registration successful",
-            user: newUser
-        };
-    },
-
-    // =========================================
-    // SESSION VALIDATION
-    // =========================================
-    validateSession() {
-
-        const user = StorageService.getCurrentUser();
-
-        if (!user) {
-
-            return {
-                success: false,
-                message: "No active session"
-            };
-        }
-
-        return {
-            success: true,
-            user: user
-        };
-    },
+        this.core.storage.set("users", users);
+    }
 
     // =========================================
     // LOGOUT SYSTEM
     // =========================================
     logout() {
 
-        StorageService.logout();
+        this.core.destroySession();
+        this.core.setCurrentUser(null);
 
         return {
             success: true,
             message: "Logged out successfully"
         };
     }
-};
+
+    // =========================================
+    // ID GENERATOR
+    // =========================================
+    generateId() {
+
+        return "usr_" + Math.random().toString(36).substring(2, 10);
+    }
+
+    // =========================================
+    // GET CURRENT USER
+    // =========================================
+    getCurrentUser() {
+        return this.core.loadCurrentUser();
+    }
+}
+
+// =========================================
+// EXPORT GLOBAL
+// =========================================
+window.AuthSystem = AuthSystem;
