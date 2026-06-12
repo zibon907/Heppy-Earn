@@ -1,46 +1,27 @@
-document
-.getElementById(
-"loginForm"
-)
-.addEventListener(
-"submit",
-function(event){
+document.getElementById("loginForm")
+.addEventListener("submit", function(e) {
 
-event.preventDefault();
+    e.preventDefault();
 
-const email =
-document
-.getElementById(
-"email"
-)
-.value
-.trim();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-const password =
-document
-.getElementById(
-"password"
-)
-.value
-.trim();
+    const result = AuthService.login({
+        email,
+        password
+    });
 
-const result =
-AuthService.login(
-email,
-password
-);
+    if (result.success) {
 
-if(result.success){
+        // save session
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify(result.user)
+        );
 
-window.location.href =
-"dashboard.html";
+        window.location.href = "dashboard.html";
 
-}else{
-
-alert(
-result.message
-);
-
-}
-
+    } else {
+        alert(result.message);
+    }
 });
