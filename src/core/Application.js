@@ -1,84 +1,62 @@
 import Application from "./Application.js";
-export default class Application {
 
-    constructor() {
-        this.booted = false;
-    }
-
-    async boot() {
-        this.booted = true;
-        console.log("[APP] Booted");
-    }
-}
 class Bootstrap {
 
     constructor() {
 
         this.app = null;
+        this.started = false;
     }
 
     async start() {
+
+        if (this.started) return;
+
+        this.started = true;
 
         try {
 
             this.showBootMessage();
 
-            this.app =
-                new Application();
+            this.app = new Application();
+
+            if (!this.app || typeof this.app.boot !== "function") {
+                throw new Error("Application failed to load properly");
+            }
 
             await this.app.boot();
 
             window.App = this.app;
 
             this.initializeDOM();
-
             this.initializeEvents();
 
             this.showReadyMessage();
 
         } catch (error) {
 
-            console.error(
-                "[BOOTSTRAP ERROR]",
-                error
-            );
+            console.error("[BOOTSTRAP ERROR]", error);
 
             this.renderFatalError(
-                error.message
+                error?.message || "Unknown error"
             );
         }
     }
 
     initializeDOM() {
 
-        document.body.classList.add(
-            "app-ready"
-        );
+        document.body.classList.add("app-ready");
     }
 
     initializeEvents() {
 
-        window.addEventListener(
-            "error",
-            event => {
+        window.addEventListener("error", event => {
+            console.error("[GLOBAL ERROR]", event.error);
+        });
 
-                console.error(
-                    "[GLOBAL ERROR]",
-                    event.error
-                );
-            }
-        );
-
-        window.addEventListener(
-            "unhandledrejection",
-            event => {
-
-                console.error(
-                    "[PROMISE ERROR]",
-                    event.reason
-                );
-            }
-        );
+        window.addEventListener("unhandledrejection", event => {
+            console.error("[PROMISE ERROR]", event.reason);
+        });
     }
 
     showBootMessage() {
@@ -100,25 +78,19 @@ class Bootstrap {
     renderFatalError(message) {
 
         document.body.innerHTML = `
-            <div
-                style="
-                    min-height:100vh;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                    background:#0b1120;
-                    color:white;
-                    font-family:Arial,sans-serif;
-                "
-            >
+            <div style="
+                min-height:100vh;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:#0b1120;
+                color:white;
+                font-family:Arial;
+                padding:20px;
+            ">
                 <div>
-                    <h1>
-                        Application Error
-                    </h1>
-
-                    <p>
-                        ${message}
-                    </p>
+                    <h1>Application Error</h1>
+                    <p>${message}</p>
                 </div>
             </div>
         `;
