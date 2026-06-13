@@ -1,39 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Register</title>
-<link rel="stylesheet" href="style.css">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Virtual Gaming Platform</title>
 
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+
+    <style>
+        body{
+            margin:0;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:#0f172a;
+            font-family:Arial,sans-serif;
+        }
+
+        .register-card{
+            width:100%;
+            max-width:500px;
+            background:#111827;
+            padding:32px;
+            border-radius:16px;
+            color:#fff;
+            box-shadow:0 20px 50px rgba(0,0,0,.4);
+        }
+
+        .register-card h1{
+            margin-bottom:20px;
+            text-align:center;
+        }
+
+        .form-group{
+            margin-bottom:16px;
+        }
+
+        .form-group label{
+            display:block;
+            margin-bottom:8px;
+        }
+
+        .form-group input{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            background:#1f2937;
+            color:#fff;
+            box-sizing:border-box;
+        }
+
+        .btn-register{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            background:#2563eb;
+            color:#fff;
+            font-weight:bold;
+        }
+
+        .message{
+            margin-top:15px;
+            text-align:center;
+        }
+
+        a{
+            color:#60a5fa;
+        }
+    </style>
+</head>
 <body>
 
-<div class="auth-box">
+    <div class="register-card">
 
-    <h2>Register</h2>
+        <h1>Create Account</h1>
 
-    <form id="registerForm">
+        <form id="registerForm">
 
-        <input type="text" id="name" placeholder="Full Name" required>
+            <div class="form-group">
+                <label>Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    required
+                    minlength="3"
+                >
+            </div>
 
-        <input type="email" id="email" placeholder="Email" required>
+            <div class="form-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    required
+                >
+            </div>
 
-        <input type="password" id="password" placeholder="Password (min 6)" required>
+            <div class="form-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    required
+                    minlength="6"
+                >
+            </div>
 
-        <button type="submit">Register</button>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    required
+                >
+            </div>
 
-    </form>
+            <button
+                type="submit"
+                class="btn-register"
+            >
+                Register
+            </button>
 
-    <p>
-        Already have account?
-        <a href="index.html">Login</a>
-    </p>
+        </form>
 
-</div>
+        <div
+            id="message"
+            class="message"
+        ></div>
 
-<script src="storage.js"></script>
-<script src="auth.js"></script>
-<script src="register.js"></script>
+        <p class="message">
+            Already have an account?
+            <a href="login.html">
+                Login
+            </a>
+        </p>
+
+    </div>
+
+    <script type="module">
+
+        class RegisterPage {
+
+            constructor() {
+
+                this.form =
+                    document.getElementById(
+                        "registerForm"
+                    );
+
+                this.message =
+                    document.getElementById(
+                        "message"
+                    );
+
+                this.bindEvents();
+            }
+
+            bindEvents() {
+
+                this.form.addEventListener(
+                    "submit",
+                    event => {
+
+                        event.preventDefault();
+
+                        this.register();
+                    }
+                );
+            }
+
+            register() {
+
+                const username =
+                    document.getElementById(
+                        "username"
+                    ).value.trim();
+
+                const email =
+                    document.getElementById(
+                        "email"
+                    ).value.trim();
+
+                const password =
+                    document.getElementById(
+                        "password"
+                    ).value;
+
+                const confirmPassword =
+                    document.getElementById(
+                        "confirmPassword"
+                    ).value;
+
+                if (
+                    password !==
+                    confirmPassword
+                ) {
+
+                    this.showMessage(
+                        "Passwords do not match",
+                        "red"
+                    );
+
+                    return;
+                }
+
+                const user = {
+
+                    id:
+                        crypto.randomUUID(),
+
+                    username,
+
+                    email,
+
+                    password,
+
+                    createdAt:
+                        new Date()
+                        .toISOString()
+                };
+
+                localStorage.setItem(
+                    "vgp_user",
+                    JSON.stringify(user)
+                );
+
+                this.showMessage(
+                    "Registration successful",
+                    "#22c55e"
+                );
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "login.html";
+
+                }, 1500);
+            }
+
+            showMessage(
+                text,
+                color
+            ) {
+
+                this.message.textContent =
+                    text;
+
+                this.message.style.color =
+                    color;
+            }
+        }
+
+        new RegisterPage();
+
+    </script>
 
 </body>
 </html>
