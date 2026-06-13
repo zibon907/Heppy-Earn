@@ -9,17 +9,11 @@ html {
 }
 
 body {
-
     margin: 0;
-
     font-family: var(--font-primary);
-
     background: var(--color-bg);
-
     color: var(--color-text);
-
     min-height: 100vh;
-
     overflow-x: hidden;
 }
 
@@ -29,52 +23,88 @@ img {
 }
 
 a {
-
     text-decoration: none;
-
     color: inherit;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
 .container {
-
     width: 100%;
-
     max-width: var(--container-width);
-
     margin: 0 auto;
-
     padding-left: 20px;
-
     padding-right: 20px;
 }
 
 .section {
-
     padding-top: 100px;
-
     padding-bottom: 100px;
 }
 
 .section-header {
-
     text-align: center;
-
     margin-bottom: 60px;
 }
 
 .section-header h2 {
-
     font-size: var(--font-size-2xl);
-
     margin-bottom: 16px;
 }
 
 .section-header p {
-
     color: var(--color-text-muted);
 }
 
 .dark-section {
-
     background: var(--color-surface);
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: var(--color-text-muted);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-surface-light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-border);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .section {
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+        font-size: var(--font-size-xl);
+    }
 }
