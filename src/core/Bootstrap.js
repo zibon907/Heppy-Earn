@@ -1,12 +1,26 @@
 import Application from "./Application.js";
 
+import Application from "./Application.js";
+
 class Bootstrap {
 
     constructor() {
-
         this.app = null;
-        this.started = false;
     }
+
+    async start() {
+
+        console.log("Application import =", Application);
+
+        this.app = new Application();
+
+        await this.app.boot();
+
+        window.App = this.app;
+    }
+}
+
+export default new Bootstrap();
 
     async start() {
 
