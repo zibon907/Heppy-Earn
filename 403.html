@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - Access Forbidden</title>
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <style>
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-content {
+            max-width: 500px;
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            color: var(--color-danger);
+            margin: 0;
+        }
+
+        .error-message {
+            font-size: 28px;
+            margin: 20px 0;
+            color: var(--color-text);
+        }
+
+        .error-description {
+            color: var(--color-text-muted);
+            margin-bottom: 30px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="error-container">
+        <div class="error-content">
+            <h1 class="error-code">403</h1>
+            <h2 class="error-message">Access Forbidden</h2>
+            <p class="error-description">You don't have permission to access this resource.</p>
+            <div class="error-actions">
+                <a href="index.html" class="btn btn-primary">Go Home</a>
+                <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
