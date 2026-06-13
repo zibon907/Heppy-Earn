@@ -1,0 +1,210 @@
+/* NAVBAR */
+
+.navbar {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 999;
+
+    backdrop-filter: blur(12px);
+
+    background:
+        rgba(11,17,32,0.8);
+
+    border-bottom:
+        1px solid var(--color-border);
+}
+
+.navbar-wrapper {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    min-height: 80px;
+}
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 22px;
+
+    font-weight: 700;
+}
+
+.nav-menu {
+
+    display: flex;
+
+    gap: 24px;
+}
+
+.nav-actions {
+
+    display: flex;
+
+    gap: 12px;
+}
+
+/* HERO */
+
+.hero {
+
+    min-height: 90vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+.hero-content {
+
+    max-width: 850px;
+}
+
+.hero-badge {
+
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    border: 1px solid var(--color-border);
+
+    margin-bottom: 24px;
+}
+
+.hero h1 {
+
+    font-size: 64px;
+
+    margin-bottom: 24px;
+}
+
+.hero p {
+
+    color: var(--color-text-muted);
+
+    line-height: 1.8;
+
+    margin-bottom: 32px;
+}
+
+.hero-actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 16px;
+}
+
+/* GRID SYSTEM */
+
+.feature-grid,
+.game-grid,
+.reward-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(260px,1fr));
+
+    gap: 24px;
+}
+
+/* LEADERBOARD */
+
+.leaderboard-table {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.leaderboard-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 18px;
+
+    border-radius: 12px;
+
+    background: var(--color-surface-light);
+}
+
+/* CTA */
+
+.cta {
+
+    text-align: center;
+
+    padding: 120px 20px;
+}
+
+.cta h2 {
+
+    margin-bottom: 16px;
+}
+
+.cta p {
+
+    margin-bottom: 28px;
+
+    color: var(--color-text-muted);
+}
+
+/* FOOTER */
+
+.footer {
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    border-top:
+        1px solid var(--color-border);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .nav-menu {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero-actions {
+
+        flex-direction: column;
+    }
+
+    .navbar-wrapper {
+
+        flex-wrap: wrap;
+
+        gap: 12px;
+    }
+}
