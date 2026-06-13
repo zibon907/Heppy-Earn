@@ -371,16 +371,16 @@ placeBet({
         winRate:
             games.length
                 ? Number(
-
                       (
                           wins /
                           games.length
                       ) * 100
-
                   ).toFixed(2)
                 : 0
     };
-    }
+}
+
+}
 
 const gameEngine =
     new GameEngine();
