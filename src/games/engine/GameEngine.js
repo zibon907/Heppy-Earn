@@ -225,35 +225,57 @@ class GameEngine {
     }
 
     placeBet({
-        userId,
-        gameType,
-        betAmount,
-        prediction,
-        outcome,
-        multiplier = 2
-    }) {
+    userId,
+    gameType,
+    betAmount,
+    prediction,
+    outcome,
+    multiplier = 2
+}) {
 
-        this.validateBet(
-    betAmount
-);
+    this.validateBet(
+        betAmount
+    );
 
-if (
-    !this.hasEnoughBalance(
+    if (
+        !this.hasEnoughBalance(
+            userId,
+            betAmount
+        )
+    ) {
+
+        throw new Error(
+            "Insufficient balance"
+        );
+    }
+
+    // Deduct bet first
+    walletService.debit(
         userId,
         betAmount
-    )
-) {
-
-    throw new Error(
-        "Insufficient balance"
     );
-}
 
-// Deduct bet first
-walletService.debit(
-    userId,
-    betAmount
-);
+    const win =
+        prediction === outcome;
+
+    if (win) {
+
+        return this.processWin({
+
+            userId,
+            gameType,
+            betAmount,
+            multiplier
+        });
+    }
+
+    return this.processLoss({
+
+        userId,
+        gameType,
+        betAmount
+    });
+}
 
         const win =
             prediction === outcome;
