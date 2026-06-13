@@ -1,5 +1,5 @@
-import Application
-from "./Application.js";
+import Bootstrap
+from "./Bootstrap.js";
 
 class Bootstrap {
 
