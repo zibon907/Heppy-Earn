@@ -1,79 +1,119 @@
-import ServiceContainer
-from "./ServiceContainer.js";
+import Application
+from "./Application.js";
 
-import ModuleLoader
-from "./ModuleLoader.js";
-
-export default class Application {
+class Bootstrap {
 
     constructor() {
 
-        this.version = "1.0.0";
-
-        this.started = false;
-
-        this.container =
-            new ServiceContainer();
-
-        this.modules =
-            new ModuleLoader();
+        this.app = null;
     }
 
-    async boot() {
+    async start() {
 
-        if (this.started) {
+        try {
 
-            return;
+            this.showBootMessage();
+
+            this.app =
+                new Application();
+
+            await this.app.boot();
+
+            window.App = this.app;
+
+            this.initializeDOM();
+
+            this.initializeEvents();
+
+            this.showReadyMessage();
+
+        } catch (error) {
+
+            console.error(
+                "[BOOTSTRAP ERROR]",
+                error
+            );
+
+            this.renderFatalError(
+                error.message
+            );
         }
+    }
+
+    initializeDOM() {
+
+        document.body.classList.add(
+            "app-ready"
+        );
+    }
+
+    initializeEvents() {
+
+        window.addEventListener(
+            "error",
+            event => {
+
+                console.error(
+                    "[GLOBAL ERROR]",
+                    event.error
+                );
+            }
+        );
+
+        window.addEventListener(
+            "unhandledrejection",
+            event => {
+
+                console.error(
+                    "[PROMISE ERROR]",
+                    event.reason
+                );
+            }
+        );
+    }
+
+    showBootMessage() {
 
         console.log(
-            "[APP] Booting Platform..."
+            "%cBOOTSTRAP START",
+            "color:#00e5ff;font-size:14px;font-weight:bold"
         );
+    }
 
-        await this.registerCoreServices();
-
-        await this.loadModules();
-
-        this.started = true;
+    showReadyMessage() {
 
         console.log(
-            "[APP] Boot Complete"
+            "%cPLATFORM READY",
+            "color:#22c55e;font-size:14px;font-weight:bold"
         );
     }
 
-    async registerCoreServices() {
+    renderFatalError(message) {
 
-        this.container.singleton(
-            "eventBus",
-            () => ({
-                emit() {},
-                on() {}
-            })
-        );
+        document.body.innerHTML = `
+            <div
+                style="
+                    min-height:100vh;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    background:#0b1120;
+                    color:white;
+                    font-family:Arial,sans-serif;
+                "
+            >
+                <div>
+                    <h1>
+                        Application Error
+                    </h1>
 
-        this.container.singleton(
-            "config",
-            () => ({
-                environment:
-                    "development"
-            })
-        );
-    }
-
-    async loadModules() {
-
-        console.log(
-            "[APP] Loading Modules..."
-        );
-    }
-
-    getContainer() {
-
-        return this.container;
-    }
-
-    getModules() {
-
-        return this.modules;
+                    <p>
+                        ${message}
+                    </p>
+                </div>
+            </div>
+        `;
     }
 }
+
+export default new Bootstrap();
