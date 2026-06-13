@@ -1,0 +1,94 @@
+.btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 14px 24px;
+
+    border-radius: var(--radius-md);
+
+    border: none;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+    font-weight: 600;
+}
+
+.btn-primary {
+
+    background: var(--color-primary);
+
+    color: #000;
+}
+
+.btn-primary:hover {
+
+    background: var(--color-primary-dark);
+
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+
+    background: var(--color-surface-light);
+
+    color: var(--color-text);
+}
+
+.btn-outline {
+
+    border: 1px solid var(--color-border);
+
+    background: transparent;
+
+    color: var(--color-text);
+}
+
+.btn-lg {
+
+    padding: 16px 28px;
+}
+
+.card {
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-lg);
+
+    padding: 24px;
+
+    box-shadow: var(--shadow-md);
+}
+
+.feature-card,
+.game-card,
+.reward-card {
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+
+    border-radius: var(--radius-lg);
+
+    padding: 28px;
+
+    transition: var(--transition);
+}
+
+.feature-card:hover,
+.game-card:hover,
+.reward-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: var(--shadow-lg);
+}
