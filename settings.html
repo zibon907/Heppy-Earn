@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | Virtual Gaming Platform</title>
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="brand-logo">🎮 VGP</h2>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <a href="settings.html" class="nav-link active">Settings</a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>Settings</h1>
+                </div>
+                <div class="topbar-right">
+                    <button id="logoutBtn" class="logout-button">Logout</button>
+                </div>
+            </header>
+
+            <!-- ACCOUNT SETTINGS -->
+            <section class="card">
+                <div class="card-header">
+                    <h3>Account Settings</h3>
+                </div>
+                <div class="card-body">
+                    <form id="settingsForm">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="settingsUsername" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="settingsEmail" disabled>
+                        </div>
+
+                        <button type="button" class="btn btn-primary" onclick="editSettings()">Edit Profile</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- SECURITY -->
+            <section class="card">
+                <div class="card-header">
+                    <h3>Security</h3>
+                </div>
+                <div class="card-body">
+                    <div class="info-row">
+                        <span>Last Login</span>
+                        <strong id="lastLogin">Never</strong>
+                    </div>
+                    <div class="info-row">
+                        <span>2FA Status</span>
+                        <strong>Disabled</strong>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="alert('Feature coming soon')">Change Password</button>
+                </div>
+            </section>
+
+            <!-- PREFERENCES -->
+            <section class="card">
+                <div class="card-header">
+                    <h3>Preferences</h3>
+                </div>
+                <div class="card-body">
+                    <label>
+                        <input type="checkbox" checked> Enable notifications
+                    </label>
+                    <br><br>
+                    <label>
+                        <input type="checkbox" checked> Dark theme (enabled by default)
+                    </label>
+                </div>
+            </section>
+
+            <!-- DANGER ZONE -->
+            <section class="card" style="border-color: var(--color-danger);">
+                <div class="card-header">
+                    <h3 style="color: var(--color-danger);">Danger Zone</h3>
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn" style="background: var(--color-danger); color: white;" onclick="deleteAccount()">Delete Account</button>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/config.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/auth.js"></script>
+
+    <script>
+        // Initialize settings page
+        function initSettings() {
+            if (!authManager.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = authManager.getCurrentUser();
+            document.getElementById('settingsUsername').value = user.username;
+            document.getElementById('settingsEmail').value = user.email;
+
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to logout?')) {
+                        authManager.logout();
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+        }
+
+        function editSettings() {
+            alert('Edit profile feature coming soon');
+        }
+
+        function deleteAccount() {
+            if (confirm('Are you absolutely sure? This cannot be undone!')) {
+                storageManager.clear();
+                authManager.logout();
+                alert('Account deleted successfully');
+                window.location.href = 'index.html';
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initSettings);
+        } else {
+            initSettings();
+        }
+    </script>
+
+</body>
+
+</html>
