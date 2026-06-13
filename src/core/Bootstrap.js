@@ -155,6 +155,4 @@ class Bootstrap {
 
 const bootstrap = new Bootstrap();
 
-Object.freeze(bootstrap);
-
 export default bootstrap;
