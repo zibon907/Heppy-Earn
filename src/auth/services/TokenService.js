@@ -30,11 +30,11 @@ class TokenService {
     generateUUID() {
 
         if (
-            crypto &&
-            crypto.randomUUID
-        ) {
-            return crypto.randomUUID();
-        }
+    typeof crypto !== "undefined" &&
+    crypto.randomUUID
+) {
+    return crypto.randomUUID();
+}
 
         return (
             Date.now() +
@@ -95,23 +95,27 @@ class TokenService {
 
     encode(payload) {
 
-        return btoa(
+    return btoa(
+        encodeURIComponent(
             JSON.stringify(payload)
-        );
+        )
+    );
     }
 
     decode(token) {
 
-        try {
+    try {
 
-            return JSON.parse(
+        return JSON.parse(
+            decodeURIComponent(
                 atob(token)
-            );
+            )
+        );
 
-        } catch {
+    } catch {
 
-            return null;
-        }
+        return null;
+    }
     }
 
     createAccessToken(
