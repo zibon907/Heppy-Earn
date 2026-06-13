@@ -32,29 +32,7 @@ class GameEngine {
                 .slice(2)
         );
     }
-
-    this.validateBet(
-    betAmount
-);
-
-if (
-    !this.hasEnoughBalance(
-        userId,
-        betAmount
-    )
-) {
-
-    throw new Error(
-        "Insufficient balance"
-    );
-}
-
-// Deduct bet first
-walletService.debit(
-    userId,
-    betAmount
-);
-
+    
         if (
             amount < this.MIN_BET
         ) {
@@ -255,7 +233,7 @@ walletService.debit(
         multiplier = 2
     }) {
 
-        tthis.validateBet(
+        this.validateBet(
     betAmount
 );
 
