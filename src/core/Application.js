@@ -1,6 +1,16 @@
 import Application
 from "./Application.js";
+export default class Application {
 
+    constructor() {
+        this.booted = false;
+    }
+
+    async boot() {
+        this.booted = true;
+        console.log("[APP] Booted");
+    }
+}
 class Bootstrap {
 
     constructor() {
