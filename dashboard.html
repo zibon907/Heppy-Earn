@@ -2,140 +2,126 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Dashboard |Rewards Platform BD</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/profile.css">
-<link rel="stylesheet" href="./assets/css/variables.css">
-<link rel="stylesheet" href="./assets/css/dashboard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Virtual Gaming Platform</title>
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/dashboard.css">
 </head>
 
 <body>
 
-<!-- ===================================== -->
-<!-- APP LAYOUT -->
-<!-- ===================================== -->
+    <div class="app-layout">
 
-<div class="app-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2 class="brand-logo">🎮 VGP</h2>
+            </div>
 
-    <!-- ===================================== -->
-    <!-- SIDEBAR -->
-    <!-- ===================================== -->
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <a href="settings.html" class="nav-link">Settings</a>
+            </nav>
+        </aside>
 
-    <aside class="sidebar">
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
 
-        <div class="sidebar-header">
-            <h2 class="brand-logo">𝗥𝗲𝘄𝗮𝗿𝗱𝘀 𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 𝗕𝗗</h2>
-        </div>
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="topbar-right">
+                    <button id="logoutBtn" class="logout-button">Logout</button>
+                </div>
+            </header>
 
-        <nav class="sidebar-nav">
+            <!-- WELCOME SECTION -->
+            <section class="card profile-hero">
+                <div class="hero-pro">
+                    <h1>Welcome Back, <span id="userName">Player</span>!</h1>
+                    <p>Earn XP • Unlock Levels • Collect Rewards</p>
+                </div>
+                <div class="wallet-anim glow">
+                    💰 Balance: <span id="walletValue">৳0</span>
+                </div>
+            </section>
 
-            <a href="dashboard.html" class="nav-link active">Dashboard</a>
-            <a href="profile.html" class="nav-link">Profile</a>
-            <a href="settings.html" class="nav-link">Settings</a>
-            <a href="notifications.html" class="nav-link">Notifications</a>
+            <!-- STATS GRID -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <h3>Wallet Balance</h3>
+                    <div id="userPoints" class="stat-value">0</div>
+                </div>
 
-        </nav>
+                <div class="stat-card">
+                    <h3>VIP Level</h3>
+                    <div id="userVip" class="stat-value">Bronze</div>
+                </div>
 
-    </aside>
+                <div class="stat-card">
+                    <h3>Total XP</h3>
+                    <div id="userXp" class="stat-value">0</div>
+                </div>
 
-    <!-- ===================================== -->
-    <!-- MAIN CONTENT -->
-    <!-- ===================================== -->
+                <div class="stat-card">
+                    <h3>Referral Code</h3>
+                    <div id="referralCode" class="stat-value">---</div>
+                </div>
+            </section>
 
-    <main class="main-content">
+            <!-- GAMES SECTION -->
+            <section class="card">
+                <h2>Available Games</h2>
+                <div class="game-grid">
 
-<div class="game-grid">
+                    <div class="game-card">
+                        <h3>🎲 Dice Roll</h3>
+                        <p>Predict the number</p>
+                        <button class="btn btn-primary" onclick="playGame('dice')">Play</button>
+                    </div>
 
-    <div class="game-card">
-        <h3>🎰 Lucky Spin</h3>
-        <button onclick="spin()">Play</button>
+                    <div class="game-card">
+                        <h3>🪙 Coin Flip</h3>
+                        <p>Heads or Tails</p>
+                        <button class="btn btn-primary" onclick="playGame('coinflip')">Play</button>
+                    </div>
+
+                    <div class="game-card">
+                        <h3>🎡 Spin Wheel</h3>
+                        <p>Win big rewards</p>
+                        <button class="btn btn-primary" onclick="playGame('spinwheel')">Play</button>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
     </div>
 
-    <div class="game-card">
-        <h3>🎲 Dice Roll</h3>
-        <button onclick="rollDice()">Play</button>
-    </div>
+    <!-- Scripts -->
+    <script src="./js/config.js"></script>
+    <script src="./js/storage.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/dashboard.js"></script>
 
-    <div class="game-card">
-        <h3>🪙 Coin Flip</h3>
-        <button onclick="coinFlip()">Play</button>
-    </div>
+    <script>
+        function playGame(gameType) {
+            if (!authManager.isLoggedIn()) {
+                alert('Please login first');
+                window.location.href = 'login.html';
+                return;
+            }
+            alert('Game: ' + gameType + '\n(Feature coming soon)');
+        }
+    </script>
 
-</div>
-		
-        <!-- ===================================== -->
-        <!-- TOPBAR -->
-        <!-- ===================================== -->
+</body>
 
-        <header class="topbar">
-
-            <div class="topbar-left">
-                <h1>Dashboard Overview</h1>
-            </div>
-
-            <div class="topbar-right">
-
-                <button id="notificationBtn" class="icon-button">
-                    Notifications
-                </button>
-
-                <button id="logoutBtn" class="logout-button">
-                    Logout
-                </button>
-
-            </div>
-
-        </header>
-
-        <!-- USER WELCOME CARD / HERO SECTION -->
-<section class="card profile-hero">
-	<div class="hero-pro">
-    <h1>Welcome Back, Player</h1>
-    <p>Earn XP • Unlock Levels • Collect Rewards</p>
-   
- </div>
-    <div>
-        <h2 id="userName">Loading...</h2>
-        <p id="userEmail">email@example.com</p>
-    </div>
-
-    <!-- 💰 WALLET BOX HERE -->
-    <div class="wallet-anim glow">
-    💰 <span id="walletValue">৳0</span>
-</div>
-
-</section>
-
-        <!-- ===================================== -->
-        <!-- STATS GRID -->
-        <!-- ===================================== -->
-
-        <section class="stats-grid">
-
-            <div class="stat-card">
-                <h3>Wallet</h3>
-                <div id="userPoints" class="stat-value">0</div>
-            </div>
-
-            <div class="stat-card">
-                <h3>VIP Level</h3>
-                <div id="userVip" class="stat-value">Bronze</div>
-            </div>
-
-            <div class="stat-card">
-                <h3>Referrals</h3>
-                <div id="referralCount" class="stat-value">0</div>
-            </div>
-
-            <div class="stat-card">
-                <h3>Referral Code</h3>
-                <div id="referralCode" class="stat-value">---</div>
-            </div>
-            <script src="js/storage.js"></script>
-			<script src="js/auth.js"></script>
-			<script src="js/dashboard.js"></script>
+</html>
