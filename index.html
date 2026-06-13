@@ -402,17 +402,23 @@
 
         try {
 
+            if (!Bootstrap || typeof Bootstrap.start !== "function") {
+                throw new Error("Bootstrap not properly initialized");
+            }
+
             await Bootstrap.start();
 
             window.__APP__ = Bootstrap;
 
+            console.log("[APP] Initialized successfully");
+
         } catch (err) {
 
-            console.error("[BOOT FAILED]", err);
+            console.error("[BOOT ERROR]", err);
 
             document.body.innerHTML = `
-                <div style="padding:20px;color:red;font-family:Arial">
-                    <h2>App Failed to Start</h2>
+                <div style="padding:20px;font-family:Arial;color:red">
+                    <h2>Application Failed to Start</h2>
                     <pre>${err.message}</pre>
                 </div>
             `;
@@ -424,8 +430,7 @@
     } else {
         startApp();
     }
-</script>
-    </script>
+        </script>
 
 </body>
 
