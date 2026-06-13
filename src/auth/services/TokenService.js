@@ -95,28 +95,41 @@ class TokenService {
 
     encode(payload) {
 
-    return btoa(
-        encodeURIComponent(
-            JSON.stringify(payload)
-        )
-    );
-    }
+    try {
 
-    decode(token) {
+        return btoa(
+            JSON.stringify(payload)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "[TOKEN ENCODE ERROR]",
+            error
+        );
+
+        return null;
+    }
+}
+
+decode(token) {
 
     try {
 
         return JSON.parse(
-            decodeURIComponent(
-                atob(token)
-            )
+            atob(token)
         );
 
-    } catch {
+    } catch (error) {
+
+        console.error(
+            "[TOKEN DECODE ERROR]",
+            error
+        );
 
         return null;
     }
-    }
+}
 
     createAccessToken(
         userId
