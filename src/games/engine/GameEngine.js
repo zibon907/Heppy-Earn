@@ -231,8 +231,7 @@ class GameEngine {
 
     return record;
     }
-
-    placeBet({
+placeBet({
     userId,
     gameType,
     betAmount,
