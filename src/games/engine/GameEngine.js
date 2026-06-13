@@ -311,48 +311,91 @@ walletService.debit(
             );
     }
 
-    getStatistics(
-        userId
-    ) {
+    getStatistics(userId) {
 
-        const games =
-            this.getUserHistory(
-                userId
-            );
+    const games =
+        this.getUserHistory(
+            userId
+        );
 
-        const wins =
-            games.filter(
-                g =>
-                    g.result ===
-                    "WIN"
-            ).length;
+    const wins =
+        games.filter(
+            g =>
+                g.result ===
+                "WIN"
+        ).length;
 
-        const losses =
-            games.filter(
-                g =>
-                    g.result ===
-                    "LOSS"
-            ).length;
+    const losses =
+        games.filter(
+            g =>
+                g.result ===
+                "LOSS"
+        ).length;
 
-        return {
+    const totalWagered =
+        games.reduce(
 
-            totalGames:
-                games.length,
+            (
+                total,
+                game
+            ) =>
 
-            wins,
+                total +
+                (
+                    game.betAmount ||
+                    0
+                ),
 
-            losses,
+            0
+        );
 
-            winRate:
-                games.length
-                    ? (
+    const totalWon =
+        games.reduce(
+
+            (
+                total,
+                game
+            ) =>
+
+                total +
+                (
+                    game.reward ||
+                    0
+                ),
+
+            0
+        );
+
+    return {
+
+        totalGames:
+            games.length,
+
+        wins,
+
+        losses,
+
+        totalWagered,
+
+        totalWon,
+
+        netProfit:
+            totalWon -
+            totalWagered,
+
+        winRate:
+            games.length
+                ? Number(
+
+                      (
                           wins /
                           games.length
                       ) * 100
-                    : 0
-        };
+
+                  ).toFixed(2)
+                : 0
+    };
     }
-}
 
 const gameEngine =
     new GameEngine();
